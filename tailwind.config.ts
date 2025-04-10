@@ -67,11 +67,14 @@ export default {
 				leaf: {
 					DEFAULT: '#8BC34A', // Lighter green for leaves
 					hover: '#9CCC65',
-					active: '#7CB342'
+					active: '#7CB342',
+					light: '#C5E1A5',
+					dark: '#558B2F'
 				},
 				branch: {
 					DEFAULT: '#795548', // Brown for branches
-					glow: '#A1887F'
+					glow: '#A1887F',
+					dark: '#5D4037'
 				},
 				sky: {
 					DEFAULT: '#E3F2FD', // Light blue for background
@@ -81,6 +84,13 @@ export default {
 					green: '#C8E6C9', // Very soft green
 					blue: '#B3E5FC', // Very soft blue
 					yellow: '#FFF9C4', // Very soft yellow
+					purple: '#E1BEE7', // Very soft purple
+					pink: '#F8BBD0', // Very soft pink
+				},
+				wood: {
+					light: '#D7CCC8',
+					DEFAULT: '#A1887F',
+					dark: '#795548',
 				}
 			},
 			borderRadius: {
@@ -126,3 +136,4 @@ export default {
 	},
 	plugins: [require("tailwindcss-animate")],
 } satisfies Config;
+

@@ -61,7 +61,8 @@
   }
   
   .branch {
-    @apply bg-branch relative rounded-full transition-all duration-300;
+    @apply bg-branch relative rounded-full transition-all duration-300 shadow-md;
+    background: linear-gradient(to right, #8B4513, #A0522D);
   }
   
   .branch::before {
@@ -76,9 +77,31 @@
   .leaf {
     @apply bg-leaf rounded-full shadow-md hover:bg-leaf-hover active:bg-leaf-active 
            transition-all duration-300 cursor-pointer animate-float;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   }
   
   .tree-trunk {
-    @apply bg-branch rounded-b-lg;
+    @apply bg-branch rounded-b-lg relative shadow-lg;
+    background: linear-gradient(to right, #8B4513, #A0522D, #8B4513);
+  }
+
+  .tree-trunk::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: -15px;
+    right: -15px;
+    height: 15px;
+    background-color: #8B4513;
+    border-radius: 50%;
+    filter: blur(8px);
+    opacity: 0.6;
+  }
+
+  @keyframes gentle-sway {
+    0% { transform: rotate(-1deg); }
+    50% { transform: rotate(1deg); }
+    100% { transform: rotate(-1deg); }
   }
 }
+

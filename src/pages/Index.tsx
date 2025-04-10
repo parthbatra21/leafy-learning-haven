@@ -33,27 +33,32 @@ const Index = () => {
       
       {/* Main Content */}
       <main className="p-4 md:p-8 max-w-7xl mx-auto">
-        <h2 className="text-2xl font-bold mb-8 text-center">Learning Resources</h2>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Left Panel: Learning Tree */}
-          <div className="bg-white rounded-2xl shadow-sm p-4 h-[600px] overflow-hidden">
-            <h2 className="text-xl font-bold mb-4 text-center">Learning Tree</h2>
-            <LearningTree onNodeSelect={handleNodeSelect} />
-          </div>
+        {/* Tree Learning Section */}
+        <div className="bg-gradient-to-b from-sky-darker to-sky rounded-3xl shadow-lg p-6 mb-12">
+          <h2 className="text-3xl font-bold mb-10 text-center">
+            Welcome to the Learning Tree!
+            <p className="text-xl font-normal mt-2">Select a subject from the tree to start learning!</p>
+          </h2>
           
-          {/* Center Area: Activity Zone */}
-          <div className="h-[600px] overflow-auto">
-            {isBreakTime ? (
-              <BreakActivity onBreakComplete={handleBreakComplete} />
-            ) : (
-              <ActivityZone subject={selectedSubject} onBack={handleBack} />
-            )}
-          </div>
-          
-          {/* Right Panel: Emotion & Progress Tracker */}
-          <div className="h-[600px] overflow-auto">
-            <EmotionTracker onBreakRequested={handleBreakRequested} />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 min-h-[700px]">
+            {/* Left Panel: Learning Tree */}
+            <div className="bg-gradient-to-b from-calm-green/30 to-calm-blue/30 rounded-2xl shadow-sm p-4 h-[650px] overflow-hidden">
+              <LearningTree onNodeSelect={handleNodeSelect} />
+            </div>
+            
+            {/* Center Area: Activity Zone */}
+            <div className="h-[650px] overflow-auto">
+              {isBreakTime ? (
+                <BreakActivity onBreakComplete={handleBreakComplete} />
+              ) : (
+                <ActivityZone subject={selectedSubject} onBack={handleBack} />
+              )}
+            </div>
+            
+            {/* Right Panel: Emotion & Progress Tracker */}
+            <div className="h-[650px] overflow-auto">
+              <EmotionTracker onBreakRequested={handleBreakRequested} />
+            </div>
           </div>
         </div>
       </main>
