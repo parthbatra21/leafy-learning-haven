@@ -15,6 +15,7 @@ interface TreeNodeProps {
     left?: string;
     right?: string;
   };
+  style?: React.CSSProperties;
 }
 
 const TreeNode: React.FC<TreeNodeProps> = ({ 
@@ -23,15 +24,21 @@ const TreeNode: React.FC<TreeNodeProps> = ({
   className, 
   onClick,
   progress = 0,
-  position
+  position,
+  style
 }) => {
   return (
-    <div className="absolute" style={{ 
-      top: position.top, 
-      bottom: position.bottom, 
-      left: position.left, 
-      right: position.right 
-    }}>
+    <div 
+      className="absolute" 
+      style={{ 
+        top: position.top, 
+        bottom: position.bottom, 
+        left: position.left, 
+        right: position.right,
+        transform: 'translateX(-50%)',
+        ...style
+      }}
+    >
       <div className="relative group">
         <button 
           onClick={onClick} 
@@ -97,7 +104,7 @@ const LearningTree: React.FC<LearningTreeProps> = ({ onNodeSelect }) => {
         icon={<FileSpreadsheet className="text-white" size={28} />} 
         onClick={() => onNodeSelect('math')}
         progress={60}
-        position={{ bottom: "140px", left: "50%", transform: "translateX(-50%)" }}
+        position={{ bottom: "140px", left: "50%" }}
       />
       
       <TreeNode 
@@ -114,6 +121,7 @@ const LearningTree: React.FC<LearningTreeProps> = ({ onNodeSelect }) => {
         onClick={() => onNodeSelect('life-skills')}
         progress={75}
         position={{ bottom: "200px", right: "22%" }}
+        style={{ transform: 'translateX(0)' }}
       />
       
       <TreeNode 
@@ -130,6 +138,7 @@ const LearningTree: React.FC<LearningTreeProps> = ({ onNodeSelect }) => {
         onClick={() => onNodeSelect('memory')}
         progress={25}
         position={{ bottom: "260px", right: "28%" }}
+        style={{ transform: 'translateX(0)' }}
       />
       
       {/* Tree leaves decoration */}

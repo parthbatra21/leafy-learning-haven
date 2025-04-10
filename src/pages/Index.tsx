@@ -27,27 +27,27 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-sky">
+    <div className="min-h-screen bg-gradient-to-b from-sky-darker to-sky">
       {/* Hero Section */}
       <HeroSection />
       
       {/* Main Content */}
-      <main className="p-4 md:p-8 max-w-7xl mx-auto">
+      <main className="px-4 py-8 md:p-8 max-w-7xl mx-auto">
         {/* Tree Learning Section */}
-        <div className="bg-gradient-to-b from-sky-darker to-sky rounded-3xl shadow-lg p-6 mb-12">
-          <h2 className="text-3xl font-bold mb-10 text-center">
+        <div className="bg-gradient-to-b from-sky-darker to-sky rounded-3xl shadow-lg p-4 md:p-6 mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4 md:mb-10 text-center">
             Welcome to the Learning Tree!
-            <p className="text-xl font-normal mt-2">Select a subject from the tree to start learning!</p>
+            <p className="text-lg md:text-xl font-normal mt-2">Select a subject from the tree to start learning!</p>
           </h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 min-h-[700px]">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 min-h-[500px] md:min-h-[700px]">
             {/* Left Panel: Learning Tree */}
-            <div className="bg-gradient-to-b from-calm-green/30 to-calm-blue/30 rounded-2xl shadow-sm p-4 h-[650px] overflow-hidden">
+            <div className="bg-gradient-to-b from-calm-green/30 to-calm-blue/30 rounded-2xl shadow-sm p-4 h-[400px] md:h-[650px] overflow-hidden">
               <LearningTree onNodeSelect={handleNodeSelect} />
             </div>
             
             {/* Center Area: Activity Zone */}
-            <div className="h-[650px] overflow-auto">
+            <div className="h-[400px] md:h-[650px] overflow-auto">
               {isBreakTime ? (
                 <BreakActivity onBreakComplete={handleBreakComplete} />
               ) : (
@@ -56,7 +56,7 @@ const Index = () => {
             </div>
             
             {/* Right Panel: Emotion & Progress Tracker */}
-            <div className="h-[650px] overflow-auto">
+            <div className="h-[400px] md:h-[650px] overflow-auto">
               <EmotionTracker onBreakRequested={handleBreakRequested} />
             </div>
           </div>
@@ -64,7 +64,7 @@ const Index = () => {
       </main>
       
       <footer className="mt-8 text-center text-sm text-gray-500 p-4">
-        <p>Created for children with Autism Spectrum Disorder</p>
+        <p>Bloom - A learning platform designed for children with Autism Spectrum Disorder</p>
       </footer>
     </div>
   );

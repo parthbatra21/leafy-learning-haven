@@ -1,8 +1,9 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FileSpreadsheet, BookOpen, User, Heart, Brain } from "lucide-react";
+import MemoryGame from "@/components/games/MemoryGame";
 
 interface ActivityProps {
   subject: string | null;
@@ -10,11 +11,13 @@ interface ActivityProps {
 }
 
 const ActivityZone: React.FC<ActivityProps> = ({ subject, onBack }) => {
+  const [selectedActivity, setSelectedActivity] = useState<string | null>(null);
+
   if (!subject) {
     return (
-      <Card className="h-full flex items-center justify-center bg-calm-blue bg-opacity-50 border-none shadow-sm">
+      <Card className="h-full flex items-center justify-center bg-calm-blue bg-opacity-50 border-none shadow-sm rounded-xl">
         <div className="text-center p-8">
-          <h2 className="text-2xl font-bold mb-4">Welcome to the Learning Tree!</h2>
+          <h2 className="text-2xl font-bold mb-4">Welcome to Bloom!</h2>
           <p className="text-lg mb-6">Select a subject from the tree to start learning!</p>
           <div className="flex justify-center space-x-4">
             <FileSpreadsheet className="text-leaf" size={36} />
@@ -28,53 +31,83 @@ const ActivityZone: React.FC<ActivityProps> = ({ subject, onBack }) => {
     );
   }
 
-  const activities: { [key: string]: { title: string; options: string[] } } = {
+  // Handle back from activity to subject selection
+  const handleBackFromActivity = () => {
+    setSelectedActivity(null);
+  };
+
+  // If an activity is selected, show that activity
+  if (selectedActivity === "memory-sequence") {
+    return <MemoryGame onBack={handleBackFromActivity} />;
+  }
+
+  const activities: { [key: string]: { title: string; options: Array<{name: string, id: string}> } } = {
     math: {
       title: "Math Activities",
-      options: ["Counting", "Shapes", "Number Line"]
+      options: [
+        { name: "Counting", id: "counting" },
+        { name: "Shapes", id: "shapes" },
+        { name: "Number Line", id: "number-line" }
+      ]
     },
     english: {
       title: "English Activities",
-      options: ["Story Builder", "Rhyming", "Picture Labeling"]
+      options: [
+        { name: "Story Builder", id: "story-builder" },
+        { name: "Rhyming", id: "rhyming" },
+        { name: "Picture Labeling", id: "picture-labeling" }
+      ]
     },
     "life-skills": {
       title: "Life Skills",
-      options: ["Brushing Teeth", "Packing Backpack", "Dressing Up"]
+      options: [
+        { name: "Brushing Teeth", id: "brushing-teeth" },
+        { name: "Packing Backpack", id: "packing-backpack" },
+        { name: "Dressing Up", id: "dressing-up" }
+      ]
     },
     emotions: {
       title: "Emotions Learning",
-      options: ["Identify Emotions", "Express Feelings", "Calm Down Techniques"]
+      options: [
+        { name: "Identify Emotions", id: "identify-emotions" },
+        { name: "Express Feelings", id: "express-feelings" },
+        { name: "Calm Down Techniques", id: "calm-down" }
+      ]
     },
     memory: {
       title: "Memory Games",
-      options: ["Match Cards", "Remember Sequence", "Find the Difference"]
+      options: [
+        { name: "Memory Sequence", id: "memory-sequence" },
+        { name: "Match Cards", id: "match-cards" },
+        { name: "Find the Difference", id: "find-difference" }
+      ]
     }
   };
 
   const currentActivity = activities[subject] || { title: "Activity", options: [] };
 
   return (
-    <Card className="h-full flex flex-col bg-calm-blue border-none shadow-sm">
-      <div className="p-6 flex-1">
+    <Card className="h-full flex flex-col bg-calm-blue border-none shadow-sm rounded-xl overflow-hidden">
+      <div className="p-6 flex-1 bg-gradient-to-b from-calm-green/30 to-calm-blue/30">
         <Button 
           variant="ghost" 
           size="sm" 
           onClick={onBack}
-          className="mb-4"
+          className="mb-4 bg-white/50 backdrop-blur-sm hover:bg-white/70"
         >
           ← Back to Tree
         </Button>
         
-        <h1 className="text-2xl font-bold mb-6 text-center">{currentActivity.title}</h1>
+        <h1 className="text-3xl font-bold mb-8 text-center">{currentActivity.title}</h1>
         
-        <div className="grid grid-cols-1 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {currentActivity.options.map((option, index) => (
             <Button
               key={index}
-              className="h-24 text-lg bg-calm-green hover:bg-green-200 text-foreground"
-              onClick={() => alert(`Starting activity: ${option}`)}
+              className="h-24 text-lg bg-gradient-to-r from-calm-green to-calm-blue hover:from-green-300 hover:to-blue-300 text-foreground rounded-xl shadow-md transition-all duration-300 transform hover:scale-105"
+              onClick={() => setSelectedActivity(option.id)}
             >
-              {option}
+              {option.name}
             </Button>
           ))}
         </div>
