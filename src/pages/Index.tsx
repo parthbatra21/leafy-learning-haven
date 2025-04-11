@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import LearningTree from "@/components/LearningTree";
+import GalaxyMap from "@/components/GalaxyMap";
 import ActivityZone from "@/components/ActivityZone";
 import EmotionTracker from "@/components/EmotionTracker";
 import BreakActivity from "@/components/BreakActivity";
@@ -9,6 +9,7 @@ import HeroSection from "@/components/HeroSection";
 const Index = () => {
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
   const [isBreakTime, setIsBreakTime] = useState(false);
+  const [showEmotionTracker, setShowEmotionTracker] = useState(false);
 
   const handleNodeSelect = (subject: string) => {
     setSelectedSubject(subject);
@@ -26,69 +27,78 @@ const Index = () => {
     setIsBreakTime(false);
   };
 
+  const toggleEmotionTracker = () => {
+    setShowEmotionTracker(!showEmotionTracker);
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-sky-darker to-sky">
+    <div className="min-h-screen bg-gradient-to-b from-blue-950 to-purple-900">
       {/* Hero Section */}
       <HeroSection />
       
-      {/* Main Content - Full Width Tree Background */}
-      <main className="relative">
-        {/* Tree Background Layer */}
-        <div className="absolute inset-0 z-0 overflow-hidden">
-          <div className="tree-background w-full h-full">
-            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full">
-              <div className="tree-trunk h-[70vh] w-24 mx-auto rounded-t-lg"></div>
-            </div>
-            
-            {/* Large tree leaves covering most of the background */}
-            <div className="absolute bottom-0 left-0 right-0 h-[85vh]">
-              <div className="relative w-full h-full">
-                {Array.from({ length: 60 }).map((_, i) => (
-                  <div 
-                    key={i}
-                    className="absolute rounded-full bg-green-100 opacity-60" 
-                    style={{
-                      width: `${Math.random() * 100 + 50}px`,
-                      height: `${Math.random() * 100 + 50}px`,
-                      top: `${Math.random() * 90}%`,
-                      left: `${Math.random() * 100}%`,
-                      backgroundColor: `hsl(${120 + Math.random() * 40}, ${70 + Math.random() * 20}%, ${40 + Math.random() * 20}%)`,
-                      animation: `float ${3 + Math.random() * 5}s ease-in-out infinite`,
-                      animationDelay: `${Math.random() * 3}s`,
-                      zIndex: 0
-                    }}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-        
+      {/* Main Content */}
+      <main className="relative min-h-screen overflow-hidden">
         {/* Content Layer */}
-        <div className="relative z-10 px-4 py-8 md:p-8 max-w-7xl mx-auto">
-          <div className="bg-gradient-to-b from-sky-darker/90 to-sky/90 backdrop-blur-sm rounded-3xl shadow-lg p-4 md:p-6 mb-12">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4 md:mb-10 text-center">
-              Welcome to the Learning Tree!
-              <p className="text-lg md:text-xl font-normal mt-2">Select a subject from the tree to start learning!</p>
+        <div className="relative z-10 flex flex-col min-h-screen">
+          {/* Full-width header with 3D effect */}
+          <div className="w-full bg-gradient-to-b from-blue-950/90 to-purple-900/90 backdrop-blur-sm p-6 text-center shadow-lg border-b border-white/20">
+            <h2 className="text-3xl md:text-5xl font-bold mb-2 text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.3)]">
+              Explore the Galaxy of Knowledge!
             </h2>
+            <p className="text-lg md:text-2xl font-normal text-white/90 drop-shadow-md">
+              Select a planet to start your learning journey!
+            </p>
+          </div>
+          
+          {/* Integrated content area - Modified to allow full screen galaxy map */}
+          <div className="flex-1 relative w-full h-full flex flex-col">
+            {/* Emotion tracker toggle button */}
+            <button 
+              onClick={toggleEmotionTracker}
+              className="fixed top-24 right-4 z-30 bg-white/20 hover:bg-white/30 backdrop-blur-sm p-3 rounded-full shadow-lg transition-transform hover:scale-110"
+            >
+              <span className="sr-only">Toggle Emotion Tracker</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                <line x1="15" y1="9" x2="15.01" y2="9"></line>
+              </svg>
+            </button>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 min-h-[500px] md:min-h-[700px]">
-              {/* Left Panel: Learning Tree */}
-              <div className="bg-gradient-to-b from-calm-green/60 to-calm-blue/60 backdrop-blur-sm rounded-2xl shadow-sm p-4 h-[400px] md:h-[650px] overflow-hidden">
-                <LearningTree onNodeSelect={handleNodeSelect} />
-              </div>
+            {/* Main interactive area - Changed to flex-1 to fill all available space */}
+            <div className="flex-1 relative">
+              {/* Galaxy Map - Full screen when no subject selected */}
+              {!selectedSubject && !isBreakTime && (
+                <div className="absolute inset-0 w-full h-full overflow-hidden">
+                  <GalaxyMap onNodeSelect={handleNodeSelect} />
+                </div>
+              )}
               
-              {/* Center Area: Activity Zone */}
-              <div className="bg-white/70 backdrop-blur-md rounded-2xl shadow-md p-4 h-[400px] md:h-[650px] overflow-auto">
-                {isBreakTime ? (
-                  <BreakActivity onBreakComplete={handleBreakComplete} />
-                ) : (
-                  <ActivityZone subject={selectedSubject} onBack={handleBack} />
-                )}
-              </div>
-              
-              {/* Right Panel: Emotion & Progress Tracker */}
-              <div className="bg-white/70 backdrop-blur-md rounded-2xl shadow-md p-4 h-[400px] md:h-[650px] overflow-auto">
+              {/* Activity Zone - Shows when subject is selected */}
+              {(selectedSubject || isBreakTime) && (
+                <div className="absolute inset-0 m-4 bg-black/30 backdrop-blur-md rounded-3xl shadow-xl p-6 overflow-auto transform transition-all duration-500 hover:shadow-2xl">
+                  {isBreakTime ? (
+                    <BreakActivity onBreakComplete={handleBreakComplete} />
+                  ) : (
+                    <ActivityZone subject={selectedSubject} onBack={handleBack} />
+                  )}
+                </div>
+              )}
+            </div>
+            
+            {/* Emotion Tracker - Slide in panel */}
+            <div className={`fixed top-0 right-0 h-full w-full md:w-96 bg-blue-950/90 backdrop-blur-md shadow-2xl p-6 z-20 transition-transform duration-500 ease-in-out ${showEmotionTracker ? 'translate-x-0' : 'translate-x-full'}`}>
+              <button 
+                onClick={toggleEmotionTracker}
+                className="absolute top-4 right-4 bg-red-900/50 hover:bg-red-900/70 p-2 rounded-full"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+              <div className="mt-10">
                 <EmotionTracker onBreakRequested={handleBreakRequested} />
               </div>
             </div>
@@ -96,8 +106,8 @@ const Index = () => {
         </div>
       </main>
       
-      <footer className="relative z-10 mt-8 text-center text-sm text-gray-500 p-4 bg-white/50 backdrop-blur-sm">
-        <p>Bloom - A learning platform designed for children with Autism Spectrum Disorder</p>
+      <footer className="relative z-10 text-center text-sm text-white p-4 bg-gradient-to-r from-blue-900/60 to-purple-800/60 backdrop-blur-sm border-t border-white/20 shadow-[0_-2px_10px_rgba(0,0,0,0.1)]">
+        <p className="font-medium">Bloom - A learning platform designed for children with Autism Spectrum Disorder</p>
       </footer>
     </div>
   );

@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import { ArrowDown } from 'lucide-react';
+import { ArrowDown, Rocket } from 'lucide-react';
 
 const HeroSection = () => {
   const scrollToContent = () => {
@@ -11,71 +11,90 @@ const HeroSection = () => {
     });
   };
 
+  // Generate random stars
+  const generateStars = () => {
+    const stars = [];
+    for (let i = 0; i < 150; i++) {
+      const style = {
+        left: `${Math.random() * 100}%`,
+        top: `${Math.random() * 100}%`,
+        animationDelay: `${Math.random() * 2}s`
+      };
+      stars.push(<div key={i} className={`absolute w-1 h-1 bg-white rounded-full animate-twinkle`} style={style}></div>);
+    }
+    return stars;
+  };
+
   return (
-    <div className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-sky to-sky-darker overflow-hidden">
-      {/* Decorative elements */}
-      <div className="absolute top-0 left-0 right-0 p-4 flex justify-between items-center">
-        <div className="text-2xl font-bold">Bloom</div>
-        <div className="flex space-x-4">
-          <span className="h-6 w-6 rounded-full bg-leaf animate-pulse"></span>
-          <span className="h-6 w-6 rounded-full bg-leaf-hover animate-pulse delay-300"></span>
-          <span className="h-6 w-6 rounded-full bg-leaf-active animate-pulse delay-500"></span>
+    <div className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-950 via-purple-900 to-blue-950 overflow-hidden">
+      {/* Stars background */}
+      <div className="absolute inset-0">
+        {generateStars()}
+        {/* Shooting star */}
+        <div className="absolute top-20 left-1/4 w-24 h-1 bg-white animate-shoot"></div>
+      </div>
+
+      {/* Floating Planets */}
+      <div className="absolute left-10 top-1/4 animate-float">
+        <div className="w-32 h-32 rounded-full bg-gradient-to-br from-orange-400 to-red-500">
+          <div className="relative top-4 left-4 w-24 h-24 rounded-full bg-orange-300/30"></div>
+        </div>
+        <div className="absolute -bottom-4 left-10 w-40 h-3 bg-orange-300/30 rounded-full"></div>
+      </div>
+
+      <div className="absolute right-20 top-1/3 animate-float-delayed">
+        <div className="w-20 h-20 rounded-full bg-gradient-to-br from-purple-400 to-blue-500">
+          <div className="relative top-2 left-2 w-16 h-16 rounded-full bg-purple-300/20"></div>
         </div>
       </div>
-      
+
       {/* Central content */}
-      <div className="text-center z-10 p-6">
-        <h1 className="text-5xl md:text-7xl font-bold mb-6">
-          <span className="inline-block">WE ARE</span>
-          <div className="mt-4">
-            <span className="bg-red-500 text-white px-4 py-2 rounded-l-lg">B</span>
-            <span className="bg-blue-500 text-white px-4 py-2">L</span>
-            <span className="bg-green-500 text-white px-4 py-2">O</span>
-            <span className="bg-yellow-500 text-white px-4 py-2">O</span>
-            <span className="bg-purple-500 text-white px-4 py-2 rounded-r-lg">M</span>
+      <div className="text-center z-10 p-6 space-y-8">
+        <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white">
+          <span className="block mb-4">Explore Learning</span>
+          <div className="mt-4 inline-flex">
+            <span className="bg-yellow-400 text-black px-4 py-2 rounded-l-lg">B</span>
+            <span className="bg-blue-400 text-white px-4 py-2">L</span>
+            <span className="bg-green-400 text-white px-4 py-2">O</span>
+            <span className="bg-purple-400 text-white px-4 py-2">O</span>
+            <span className="bg-pink-400 text-white px-4 py-2 rounded-r-lg">M</span>
           </div>
         </h1>
         
-        <p className="text-xl md:text-2xl max-w-2xl mx-auto mb-8">
-          Learning experiences that help children with autism
+        <p className="text-xl md:text-2xl max-w-2xl mx-auto mb-8 text-gray-200">
+          Blast off to learning adventures designed for
           <br />
-          <span className="font-bold">bloom into their full potential</span>
+          <span className="font-bold text-yellow-300">amazing young astronauts!</span>
         </p>
         
         <Button 
           onClick={scrollToContent} 
           size="lg" 
-          className="mt-8 animate-bounce bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500"
+          className="mt-8 animate-bounce bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-pink-400 hover:to-purple-500 text-black"
         >
-          Start Learning <ArrowDown className="ml-2" />
+          Start Journey <Rocket className="ml-2" />
         </Button>
       </div>
-      
-      {/* Animated decorations */}
-      <div className="absolute -left-16 bottom-10 animate-float">
-        <div className="relative w-32 h-32">
-          <div className="leaf absolute w-20 h-20 rounded-full bg-leaf-hover"></div>
-          <div className="eyes relative top-5 left-5 flex space-x-2">
-            <div className="w-3 h-5 bg-black rounded-full"></div>
-            <div className="w-3 h-5 bg-black rounded-full"></div>
-          </div>
+
+      {/* Floating UFO */}
+      <div className="absolute top-20 right-40 animate-float">
+        <div className="w-24 h-12 bg-purple-400 rounded-tl-full rounded-tr-full">
+          <div className="relative top-2 mx-auto w-16 h-8 bg-purple-500 rounded-full"></div>
+        </div>
+        <div className="mx-auto w-8 h-3 bg-yellow-400 rounded-full"></div>
+        <div className="flex space-x-2 justify-center mt-2">
+          <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+          <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse-delayed"></div>
         </div>
       </div>
-      
-      <div className="absolute -right-16 top-1/3 animate-float delay-300">
-        <div className="relative w-32 h-32">
-          <div className="leaf absolute w-20 h-20 rounded-full bg-leaf"></div>
-          <div className="eyes relative top-5 left-5 flex space-x-2">
-            <div className="w-3 h-5 bg-black rounded-full"></div>
-            <div className="w-3 h-5 bg-black rounded-full"></div>
-          </div>
-        </div>
-      </div>
-      
-      {/* Bottom decorative element */}
-      <div className="absolute bottom-10 left-0 right-0 flex justify-center">
-        <div className="animate-bounce">
-          <ArrowDown size={32} className="text-foreground" />
+
+      {/* Animated Astronaut */}
+      <div className="absolute bottom-20 left-20 animate-bounce">
+        <div className="relative">
+          <div className="w-16 h-20 bg-white rounded-t-full"></div>
+          <div className="absolute top-4 left-4 w-8 h-8 bg-gold-500 rounded-full"></div>
+          <div className="absolute top-6 left-6 w-4 h-4 bg-black rounded-full"></div>
+          <div className="absolute -bottom-4 left-5 w-6 h-8 bg-white"></div>
         </div>
       </div>
     </div>
