@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import GalaxyMap from "@/components/GalaxyMap";
-import ActivityZone from "@/components/ActivityZone";
-import EmotionTracker from "@/components/EmotionTracker";
-import BreakActivity from "@/components/BreakActivity";
-import HeroSection from "@/components/HeroSection";
+import HeroSection from '../components/scientist/herosection';
+import ScienceLab from '../components/scientist/ScienceLab';
+import ActivityZone from '../components/scientist/ActivityZone';
+import BreakActivity from '../components/scientist/BreakActivity';
+import EmotionTracker from '../components/scientist/EmotionTracker';
 
-const Index = () => {
-  const navigate = useNavigate();
+const ScientistPortal = () => {
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
   const [isBreakTime, setIsBreakTime] = useState(false);
   const [showEmotionTracker, setShowEmotionTracker] = useState(false);
@@ -32,12 +30,8 @@ const Index = () => {
     setShowEmotionTracker(!showEmotionTracker);
   };
 
-  const goToDoctorPortal = () => {
-    navigate('/doctor-portal');
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-950 to-purple-900">
+    <div className="bg-blue-100 min-h-screen">
       {/* Hero Section */}
       <HeroSection />
       
@@ -46,16 +40,16 @@ const Index = () => {
         {/* Content Layer */}
         <div className="relative z-10 flex flex-col min-h-screen">
           {/* Full-width header with 3D effect */}
-          <div className="w-full bg-gradient-to-b from-blue-950/90 to-purple-900/90 backdrop-blur-sm p-6 text-center shadow-lg border-b border-white/20">
-            <h2 className="text-3xl md:text-5xl font-bold mb-2 text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.3)]">
-              Explore the Galaxy of Knowledge!
+          <div className="w-full bg-gradient-to-b from-blue-200/90 to-blue-300/90 backdrop-blur-sm p-6 text-center shadow-lg border-b border-blue-400/20"> {/* Updated to lighter colors */}
+            <h2 className="text-3xl md:text-5xl font-bold mb-2 text-blue-800 drop-shadow-[0_2px_2px_rgba(255,255,255,0.3)]"> {/* Changed text color */}
+              Explore the Laboratory of Knowledge!
             </h2>
-            <p className="text-lg md:text-2xl font-normal text-white/90 drop-shadow-md">
-              Select a planet to start your learning journey!
+            <p className="text-lg md:text-2xl font-normal text-blue-700 drop-shadow-md"> {/* Changed text color */}
+              Select a scientific field to start your learning journey!
             </p>
           </div>
           
-          {/* Integrated content area - Modified to allow full screen galaxy map */}
+          {/* Integrated content area - Modified to allow full screen science lab */}
           <div className="flex-1 relative w-full h-full flex flex-col">
             {/* Emotion tracker toggle button */}
             <button 
@@ -71,24 +65,12 @@ const Index = () => {
               </svg>
             </button>
             
-            {/* Doctor Portal Button */}
-            <button 
-              onClick={goToDoctorPortal}
-              className="fixed top-24 left-4 z-30 bg-teal-600/70 hover:bg-teal-600/90 backdrop-blur-sm p-3 rounded-full shadow-lg transition-transform hover:scale-110"
-            >
-              <span className="sr-only">Go to Doctor Portal</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
-                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                <polyline points="9 22 9 12 15 12 15 22"></polyline>
-              </svg>
-            </button>
-            
             {/* Main interactive area - Changed to flex-1 to fill all available space */}
             <div className="flex-1 relative">
-              {/* Galaxy Map - Full screen when no subject selected */}
+              {/* Science Lab - Full screen when no subject selected */}
               {!selectedSubject && !isBreakTime && (
                 <div className="absolute inset-0 w-full h-full overflow-hidden">
-                  <GalaxyMap onNodeSelect={handleNodeSelect} />
+                  <ScienceLab onNodeSelect={handleNodeSelect} />
                 </div>
               )}
               
@@ -123,11 +105,11 @@ const Index = () => {
         </div>
       </main>
       
-      <footer className="relative z-10 text-center text-sm text-white p-4 bg-gradient-to-r from-blue-900/60 to-purple-800/60 backdrop-blur-sm border-t border-white/20 shadow-[0_-2px_10px_rgba(0,0,0,0.1)]">
+      <footer className="relative z-10 text-center text-sm text-blue-800 p-4 bg-gradient-to-r from-blue-200/60 to-blue-300/60 backdrop-blur-sm border-t border-blue-400/20 shadow-[0_-2px_10px_rgba(0,0,0,0.1)]">
         <p className="font-medium">Bloom - A learning platform designed for children with Autism Spectrum Disorder</p>
       </footer>
     </div>
   );
 };
 
-export default Index;
+export default ScientistPortal;
