@@ -39,7 +39,7 @@ const LoadingExperience = () => {
     
     // Navigate after a set time
     const timer = setTimeout(() => {
-      navigate('/dashboard'); // This would navigate to your actual dashboard
+      navigate('/original-app'); // This would navigate to your actual dashboard
     }, 8000); // Navigate after 8 seconds
     
     return () => {

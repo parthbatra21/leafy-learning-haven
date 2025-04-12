@@ -4,6 +4,7 @@
 
 @layer base {
   :root {
+    /* Primary theme colors */
     --background: 195 53% 94%; /* Light sky blue background */
     --foreground: 215 25% 27%; /* Dark blue-gray text for contrast */
 
@@ -33,6 +34,20 @@
     --ring: 142 69% 58%;
 
     --radius: 1rem; /* Rounder corners for a friendlier feel */
+
+    /* Gradient color variables for consistent use across the app */
+    --gradient-blue-start: 217 91% 60%; /* blue-500 */
+    --gradient-blue-end: 221 83% 53%;   /* blue-600 */
+    --gradient-purple-start: 269 80% 63%; /* purple-500 */
+    --gradient-purple-end: 271 91% 65%;   /* purple-400 */
+    --gradient-green-start: 142 69% 58%;  /* green-500 */
+    --gradient-green-end: 142 71% 45%;    /* green-600 */
+    --gradient-yellow-start: 53 98% 77%;  /* yellow-300 */
+    --gradient-yellow-end: 36 100% 50%;   /* yellow-500 */
+    --gradient-red-start: 0 91% 71%;      /* red-400 */
+    --gradient-red-end: 0 84% 60%;        /* red-500 */
+    --gradient-teal-start: 166 76% 47%;   /* teal-500 */
+    --gradient-teal-end: 166 72% 40%;     /* teal-600 */
   }
 
   .dark {
@@ -50,6 +65,74 @@
   body {
     @apply bg-sky text-foreground;
     font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif; /* Friendly font for children */
+  }
+}
+
+/* Custom utility classes for common gradients used throughout the app */
+@layer utilities {
+  .bg-gradient-space {
+    @apply bg-gradient-to-b from-blue-950 via-purple-900 to-indigo-900;
+  }
+  
+  .bg-gradient-hero {
+    @apply bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600;
+  }
+  
+  .bg-gradient-cta {
+    @apply bg-gradient-to-br from-blue-600 to-purple-600;
+  }
+  
+  .bg-gradient-feature-blue {
+    @apply bg-gradient-to-br from-white to-blue-50;
+  }
+  
+  .bg-gradient-feature-purple {
+    @apply bg-gradient-to-br from-white to-purple-50;
+  }
+  
+  .bg-gradient-feature-teal {
+    @apply bg-gradient-to-br from-white to-teal-50;
+  }
+  
+  .bg-gradient-footer {
+    @apply bg-gradient-to-r from-slate-800 to-slate-900;
+  }
+  
+  .bg-gradient-stats {
+    @apply bg-gradient-to-r from-slate-50 via-blue-50 to-slate-50;
+  }
+  
+  .bg-gradient-header {
+    @apply bg-gradient-to-r from-blue-900/90 via-purple-800/90 to-blue-900/90;
+  }
+  
+  /* Circle background gradients */
+  .bg-circle-purple {
+    @apply bg-gradient-to-br from-purple-400 to-purple-600;
+  }
+  
+  .bg-circle-yellow {
+    @apply bg-gradient-to-br from-yellow-300 to-yellow-500;
+  }
+  
+  .bg-circle-green {
+    @apply bg-gradient-to-br from-green-400 to-green-600;
+  }
+  
+  .bg-circle-red {
+    @apply bg-gradient-to-br from-red-400 to-red-600;
+  }
+  
+  .bg-circle-teal {
+    @apply bg-gradient-to-br from-green-300 to-teal-500;
+  }
+  
+  .bg-circle-blue-purple {
+    @apply bg-gradient-to-br from-purple-300 to-blue-500;
+  }
+  
+  .bg-circle-red-yellow {
+    @apply bg-gradient-to-br from-red-300 to-yellow-400;
   }
 }
 

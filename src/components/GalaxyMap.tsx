@@ -33,6 +33,7 @@ interface PlanetNodeProps {
   style?: React.CSSProperties;
   orbitRadius?: number;
   orbitSpeed?: number;
+  orbitStartPosition?: number;
 }
 
 const PlanetNode: React.FC<PlanetNodeProps> = ({ 
@@ -44,7 +45,8 @@ const PlanetNode: React.FC<PlanetNodeProps> = ({
   position,
   style,
   orbitRadius = 0,
-  orbitSpeed = 20
+  orbitSpeed = 20,
+  orbitStartPosition = 0,
 }) => {
   return (
     <div 
@@ -55,8 +57,8 @@ const PlanetNode: React.FC<PlanetNodeProps> = ({
         right: position.right,
         bottom: position.bottom,
         '--orbit-radius': `${orbitRadius}px`,
-        transform: `rotate(0deg)`,
         animationDuration: `${orbitSpeed}s`,
+        animationDelay: `-${orbitStartPosition / 360 * orbitSpeed}s`,
         ...style
       } as React.CSSProperties}
     >
@@ -157,7 +159,7 @@ const GalaxyMap: React.FC<GalaxyMapProps> = ({ onNodeSelect }) => {
         position={{ top: "50%", left: "50%" }}
         orbitRadius={150}
         orbitSpeed={20}
-        style={{ transform: `rotate(0deg)` }}
+        orbitStartPosition={0}
         className="bg-blue-500/80 hover:bg-blue-400/90"
       />
 
@@ -169,7 +171,7 @@ const GalaxyMap: React.FC<GalaxyMapProps> = ({ onNodeSelect }) => {
         position={{ top: "50%", left: "50%" }}
         orbitRadius={250}
         orbitSpeed={25}
-        style={{ transform: `rotate(45deg)` }}
+        orbitStartPosition={72}
         className="bg-purple-500/80 hover:bg-purple-400/90"
       />
 
@@ -181,7 +183,7 @@ const GalaxyMap: React.FC<GalaxyMapProps> = ({ onNodeSelect }) => {
         position={{ top: "50%", left: "50%" }}
         orbitRadius={200}
         orbitSpeed={22}
-        style={{ transform: `rotate(90deg)` }}
+        orbitStartPosition={144}
         className="bg-green-500/80 hover:bg-green-400/90"
       />
 
@@ -193,7 +195,7 @@ const GalaxyMap: React.FC<GalaxyMapProps> = ({ onNodeSelect }) => {
         position={{ top: "50%", left: "50%" }}
         orbitRadius={300}
         orbitSpeed={28}
-        style={{ transform: `rotate(135deg)` }}
+        orbitStartPosition={216}
         className="bg-orange-500/80 hover:bg-orange-400/90"
       />
 
@@ -205,7 +207,7 @@ const GalaxyMap: React.FC<GalaxyMapProps> = ({ onNodeSelect }) => {
         position={{ top: "50%", left: "50%" }}
         orbitRadius={180}
         orbitSpeed={18}
-        style={{ transform: `rotate(180deg)` }}
+        orbitStartPosition={288}
         className="bg-pink-500/80 hover:bg-pink-400/90"
       />
 
@@ -217,44 +219,8 @@ const GalaxyMap: React.FC<GalaxyMapProps> = ({ onNodeSelect }) => {
         position={{ top: "50%", left: "50%" }}
         orbitRadius={350}
         orbitSpeed={30}
-        style={{ transform: `rotate(225deg)` }}
+        orbitStartPosition={230}
         className="bg-indigo-500/80 hover:bg-indigo-400/90"
-      />
-
-      <PlanetNode 
-        title="Art" 
-        icon={<Paintbrush className="text-white" size={28} />} 
-        onClick={() => onNodeSelect('art')}
-        progress={55}
-        position={{ top: "50%", left: "50%" }}
-        orbitRadius={280}
-        orbitSpeed={26}
-        style={{ transform: `rotate(270deg)` }}
-        className="bg-rose-500/80 hover:bg-rose-400/90"
-      />
-
-      <PlanetNode 
-        title="Music" 
-        icon={<Music className="text-white" size={28} />} 
-        onClick={() => onNodeSelect('music')}
-        progress={40}
-        position={{ top: "50%", left: "50%" }}
-        orbitRadius={220}
-        orbitSpeed={24}
-        style={{ transform: `rotate(315deg)` }}
-        className="bg-cyan-500/80 hover:bg-cyan-400/90"
-      />
-
-      <PlanetNode 
-        title="Coding" 
-        icon={<Code className="text-white" size={28} />} 
-        onClick={() => onNodeSelect('coding')}
-        progress={20}
-        position={{ top: "50%", left: "50%" }}
-        orbitRadius={320}
-        orbitSpeed={29}
-        style={{ transform: `rotate(160deg)` }}
-        className="bg-emerald-500/80 hover:bg-emerald-400/90"
       />
 
       {/* Additional decorative elements */}

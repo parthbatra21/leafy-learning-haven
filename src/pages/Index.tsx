@@ -5,9 +5,11 @@ import ActivityZone from "@/components/ActivityZone";
 import EmotionTracker from "@/components/EmotionTracker";
 import BreakActivity from "@/components/BreakActivity";
 import HeroSection from "@/components/HeroSection";
+import { useAuth } from '@/contexts/AuthContext';
 
 const Index = () => {
   const navigate = useNavigate();
+  const { userData } = useAuth();
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
   const [isBreakTime, setIsBreakTime] = useState(false);
   const [showEmotionTracker, setShowEmotionTracker] = useState(false);
@@ -37,18 +39,30 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-950 to-purple-900">
+    <div className="relative min-h-screen overflow-hidden">
+      {/* Enhanced Background Gradients */}
+      <div className="fixed inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-space"></div>
+        
+        {/* Adding colorful gradient circles similar to LandingPage */}
+        <div className="absolute top-[10%] right-[15%] w-[300px] h-[300px] rounded-full bg-circle-purple opacity-20 blur-2xl"></div>
+        <div className="absolute top-[40%] left-[10%] w-[400px] h-[400px] rounded-full bg-circle-blue-purple opacity-15 blur-3xl"></div>
+        <div className="absolute bottom-[20%] right-[25%] w-[350px] h-[350px] rounded-full bg-circle-green opacity-15 blur-2xl"></div>
+        <div className="absolute top-[60%] left-[30%] w-[250px] h-[250px] rounded-full bg-circle-red opacity-15 blur-xl"></div>
+        <div className="absolute top-[15%] left-[25%] w-[200px] h-[200px] rounded-full bg-circle-yellow opacity-10 blur-xl"></div>
+      </div>
+      
       {/* Hero Section */}
       <HeroSection />
       
       {/* Main Content */}
-      <main className="relative min-h-screen overflow-hidden">
+      <main className="relative min-h-screen overflow-hidden z-10">
         {/* Content Layer */}
         <div className="relative z-10 flex flex-col min-h-screen">
           {/* Full-width header with 3D effect */}
-          <div className="w-full bg-gradient-to-b from-blue-950/90 to-purple-900/90 backdrop-blur-sm p-6 text-center shadow-lg border-b border-white/20">
+          <div className="w-full bg-gradient-header backdrop-blur-sm p-6 text-center shadow-lg border-b border-white/20">
             <h2 className="text-3xl md:text-5xl font-bold mb-2 text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.3)]">
-              Explore the Galaxy of Knowledge!
+              {userData?.name || 'Explorer'}'s Galaxy of Knowledge!
             </h2>
             <p className="text-lg md:text-2xl font-normal text-white/90 drop-shadow-md">
               Select a planet to start your learning journey!
@@ -105,7 +119,7 @@ const Index = () => {
             </div>
             
             {/* Emotion Tracker - Slide in panel */}
-            <div className={`fixed top-0 right-0 h-full w-full md:w-96 bg-blue-950/90 backdrop-blur-md shadow-2xl p-6 z-20 transition-transform duration-500 ease-in-out ${showEmotionTracker ? 'translate-x-0' : 'translate-x-full'}`}>
+            <div className={`fixed top-0 right-0 h-full w-full md:w-96 bg-gradient-to-br from-blue-900/90 to-purple-900/90 backdrop-blur-md shadow-2xl p-6 z-20 transition-transform duration-500 ease-in-out ${showEmotionTracker ? 'translate-x-0' : 'translate-x-full'}`}>
               <button 
                 onClick={toggleEmotionTracker}
                 className="absolute top-4 right-4 bg-red-900/50 hover:bg-red-900/70 p-2 rounded-full"
@@ -123,7 +137,7 @@ const Index = () => {
         </div>
       </main>
       
-      <footer className="relative z-10 text-center text-sm text-white p-4 bg-gradient-to-r from-blue-900/60 to-purple-800/60 backdrop-blur-sm border-t border-white/20 shadow-[0_-2px_10px_rgba(0,0,0,0.1)]">
+      <footer className="relative z-10 text-center text-sm text-white p-4 bg-gradient-footer bg-opacity-80 backdrop-blur-sm border-t border-white/20 shadow-[0_-2px_10px_rgba(0,0,0,0.1)]">
         <p className="font-medium">Bloom - A learning platform designed for children with Autism Spectrum Disorder</p>
       </footer>
     </div>
