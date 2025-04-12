@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { collection, addDoc, setDoc, doc } from 'firebase/firestore';
+import { auth, db } from '../lib/firebase';
 
 const CreateAccount = () => {
   const navigate = useNavigate();
@@ -15,8 +18,10 @@ const CreateAccount = () => {
     dob: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    submission: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -73,12 +78,58 @@ const CreateAccount = () => {
     return valid;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const calculateAge = (dob: string) => {
+    const birthDate = new Date(dob);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    
+    return age;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (validateForm()) {
-      // Navigate directly without animation
-      navigate('/select-interests');
+      setIsSubmitting(true);
+      setErrors({ ...errors, submission: '' });
+      
+      try {
+        // Create user in Firebase Authentication
+        const userCredential = await createUserWithEmailAndPassword(
+          auth, 
+          formData.email, 
+          formData.password
+        );
+        
+        const user = userCredential.user;
+        
+        // Calculate age from DOB
+        const age = calculateAge(formData.dob);
+        
+        // Store user data in Firestore
+        await setDoc(doc(db, "students", user.uid), {
+          name: formData.name,
+          email: formData.email,
+          age: age,
+          dob: formData.dob,
+          createdAt: new Date()
+        });
+        
+        // Navigate to the next page
+        navigate('/select-interests');
+      } catch (error: any) {
+        console.error("Error creating account:", error);
+        setErrors({
+          ...errors,
+          submission: error.message || 'Failed to create account. Please try again.'
+        });
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -93,6 +144,12 @@ const CreateAccount = () => {
           </div>
           
           <form onSubmit={handleSubmit}>
+            {errors.submission && (
+              <div className="mb-4 p-3 bg-red-50 text-red-600 rounded-lg border border-red-200">
+                {errors.submission}
+              </div>
+            )}
+            
             <div className="space-y-2 mb-4">
               <label htmlFor="name" className="block text-sm font-medium text-slate-700">Full Name</label>
               <input
@@ -164,17 +221,18 @@ const CreateAccount = () => {
             
             <button 
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700
+              disabled={isSubmitting}
+              className={`w-full ${isSubmitting ? 'bg-blue-400' : 'bg-blue-600 hover:bg-blue-700'}
               py-3 rounded-xl font-semibold text-white shadow-lg 
-              transition-transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              transition-transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
             >
-              Continue
+              {isSubmitting ? 'Creating Account...' : 'Continue'}
             </button>
           </form>
           
           <div className="mt-6 text-center">
             <p className="text-slate-600 text-sm">
-              Already have an account? <button onClick={() => navigate('/')} className="text-blue-600 hover:text-blue-700 font-medium">Sign In</button>
+              Already have an account? <button onClick={() => navigate('/sign-in')} className="text-blue-600 hover:text-blue-700 font-medium">Sign In</button>
             </p>
           </div>
         </div>
